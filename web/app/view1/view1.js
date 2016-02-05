@@ -9,6 +9,9 @@ angular.module('myApp.view1', ['ngRoute'])
   });
 }])
 
-.controller('View1Ctrl', [function() {
+.controller('View1Ctrl', ['$scope', function($scope) {
+
+    $scope.levelColors = [ "#a9d70b", "#f9c802", "#ff0000" ];
+    $scope.reverseColors = [ "#ff0000", "#f9c802", "#a9d70b" ];
 
 }]);
