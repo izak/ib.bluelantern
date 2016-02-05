@@ -24,10 +24,14 @@ def mqtt_init(config):
     if mqtt_host is None:
         raise ValueError("You must set mqtt.host in your ini file")
     mqtt_port = int(config.registry.settings.get('mqtt.port', 1883))
+    mqtt_username = config.registry.settings.get('mqtt.username')
 
     client = mqtt.Client()
     client.on_connect = on_connect
     client.on_message = on_message
 
     client.connect(mqtt_host, mqtt_port, 60)
+    if mqtt_username is not None:
+        client.username_pw_set(mqtt_username,
+            config.registry.settings['mqtt.password'])
     return client
