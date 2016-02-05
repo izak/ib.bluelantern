@@ -16,12 +16,11 @@ function($scope, $timeout, $http) {
     $scope.reverseColors = [ "#ff0000", "#f9c802", "#a9d70b" ];
     var timer = undefined;
 
-    // Fake it for now.
-    $scope.max_load = 1600;
-    $scope.ac_load = 500;
-    $scope.pv_watt = 200;
-    $scope.bat_watt = 308;
-    $scope.overall_load = (100.0 * $scope.ac_load)/$scope.max_load;
+    $scope.ac_max_load = 1;
+    $scope.ac_load = 0;
+    $scope.pv_watt = 0;
+    $scope.bat_watt = 0;
+    $scope.overall_load = 0;
 
     (function updateloop(){
         timer = $timeout(function(){
@@ -29,10 +28,11 @@ function($scope, $timeout, $http) {
                 method: 'GET',
                 url: '/stats'
             }).success(function(data, stat, headers, config){
+                $scope.ac_max_load = data.ac_max_load;
                 $scope.ac_load = data.ac_load;
                 $scope.pv_watt = data.pv_watt;
                 $scope.bat_watt = data.bat_watt;
-                $scope.overall_load = (100.0 * $scope.ac_load)/$scope.max_load;
+                $scope.overall_load = (100.0 * $scope.ac_load)/$scope.ac_max_load;
                 updateloop();
             });
         }, 5000);
