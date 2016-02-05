@@ -1,9 +1,9 @@
 from pyramid.view import view_config
-from pyramid.response import Response
+from pyramid.httpexceptions import HTTPFound
 
 @view_config(route_name='home')
 def home(request):
-    return Response('Hello World')
+    return HTTPFound(location='/app/')
 
 @view_config(route_name='stats', renderer='json')
 def stats(request):
