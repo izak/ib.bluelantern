@@ -3,8 +3,8 @@
               donut="true" level-colors="{{levelColors}}"></div>
 <div justgage style="float: left; width: 25%" title="Load" label="Watt" value="{{ac_load}}" min="0" max="{{ac_max_load}}"
               level-colors="{{levelColors}}"></div>
-<div justgage style="float: left; width: 25%" title="PV" label="Watt" value="{{pv_watt}}" min="0" max="1000"
+<div justgage style="float: left; width: 25%" title="PV" label="Watt" value="{{pv_watt}}" min="0" max="{{pv_max_watt}}"
               level-colors="{{reverseColors}}"></div>
-<div justgage style="float: left; width: 25%" title="Battery Charge" label="Watt" value="{{bat_watt}}" min="-2000" max="2000"
+<div justgage style="float: left; width: 25%" title="Battery Charge" label="Watt" value="{{bat_watt}}" min="{{-bat_range}}" max="{{bat_range}}"
               level-colors="{{reverseColors}}"></div>
 </div>

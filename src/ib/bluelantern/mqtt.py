@@ -13,6 +13,8 @@ def on_connect(client, userdata, rc):
     # the same from all sources connected to the same bank.
     client.subscribe("+/+/voltage")
     client.subscribe("+/+/ampere")
+    client.subscribe("+/+/power")
+    client.subscribe("+/+/temperature")
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message_maker(cache):

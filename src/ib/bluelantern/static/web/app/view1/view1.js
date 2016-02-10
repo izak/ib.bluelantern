@@ -17,10 +17,12 @@ function($scope, $timeout, $http) {
     var timer = undefined,
         backoff = 1;
 
-    $scope.ac_max_load = 1;
+    $scope.ac_max_load = 1000;
     $scope.ac_load = 0;
     $scope.pv_watt = 0;
+    $scope.pv_max_watt = 1000;
     $scope.bat_watt = 0;
+    $scope.bat_range = 1000;
     $scope.overall_load = 0;
 
     (function updateloop(){
@@ -33,7 +35,9 @@ function($scope, $timeout, $http) {
                 $scope.ac_max_load = data.ac_max_load;
                 $scope.ac_load = data.ac_load;
                 $scope.pv_watt = data.pv_watt;
+                $scope.pv_max_watt = data.pv_max_watt;
                 $scope.bat_watt = data.bat_watt;
+                $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
                 $scope.overall_load = (100.0 * $scope.ac_load)/$scope.ac_max_load;
                 updateloop();
             }).error(function(){
