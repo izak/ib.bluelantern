@@ -1,5 +1,6 @@
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPFound
+from ib.bluelantern.interfaces import IEquipmentCache
 
 @view_config(route_name='home')
 def home(request):
@@ -7,6 +8,8 @@ def home(request):
 
 @view_config(route_name='stats', renderer='json')
 def stats(request):
+    cache = request.registry.getUtility(IEquipmentCache)
+    # TODO, add up values in cache and use that instead.
     """ Just fake some numbers for now """
     from random import randint
     ac_variance = randint(-25, 25)
