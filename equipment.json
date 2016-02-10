@@ -1,0 +1,12 @@
+{
+    "battery01": {
+        "mppt": {
+            "type": "pv",
+            "power": 2000
+        },
+        "inverter": {
+            "type": "load",
+            "power": 1600
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import json
 from pyramid.config import Configurator
 from ib.bluelantern.mqtt import mqtt_init
 
@@ -10,6 +11,13 @@ def main(global_config, **settings):
     config.add_route('stats', '/stats')
     config.add_static_view('app', 'static/web/app', cache_max_age=3600)
     config.scan()
+
+    # Read equipment file
+    equipment_file = config.registry.settings.get('equipment')
+    if equipment_file is not None:
+        equipment = json.load(open(equipment_file, 'r'))
+    else:
+        equipment = {}
 
     # Set up MQTT link
     mqtt = mqtt_init(config)
