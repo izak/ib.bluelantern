@@ -1,8 +1,65 @@
 # Blue Lantern
 
+Blue Lantern is a modular renewable energy monitoring system, or at least, with
+enough time and effort it will be. It is named after the Blue Lantern Corps
+organisation that appears in DC comics, not because I'm a fan of DC comics,
+but because the the emotion of hope for the future on which it is based seems
+apt when it comes to renewable energy.
 Hope for the future.
 
-TODO: Write this
+## Components
+
+One of design criteria was that it should be easy for a developer to interface
+with a new piece of equipment by writing only the code necessary for
+communicating with the relevant piece of equipment. Ideally it should be
+possible for the developer to use the language of his choice.
+
+For a communications bus, MQTT is utilised. Instructions for building Mosquitto
+is included below.
+
+In order to link your equipment, all you need to do is write the interfacing
+code for communicating voltage, current and power (if available) onto the mqtt
+bus, where other components will subscribe to the information they require
+to operate.
+
+For a start, it will support Victron Multiplus inverters, and the Victron
+MPPT charge controllers, for no other reason than because that is what I have
+available.
+
+The other components of the system are:
+
+* A web server, written in python and pyramid, that collects the related
+  charge and discharge values, and aggregates it into a json stream for display
+  use in a web application.
+* A web application, using angularjs, for displaying gauges and providing other
+  functions (currently still very crude and not at all useable yet).
+* A logging component that will log power values to a local or remote database
+  (not yet implemented).
+
+For development you will need:
+
+* Python, and preferably virtualenv.
+* [nodejs][node] to get the angular part working. This pulls in heaps of
+  javascript libraries. In due course, I will probably aim at making a static
+  distribution for people who don't want to develop this part.
+* An MQTT broker. Instructions are included below for Mosquitto.
+
+Some equipment requires specialised hardware.
+
+* For Victron Multiplus and Quatro inverters you will need an MK2-USB module.
+* For the Victron BlueSolar MPPT charge controllers equipped with a VE.Direct
+  port, you will need the VE.Direct USB cable, or a similar USB to Serial (TTL
+  level) converter. I strongly advise the use of the Victron cable for galvanic
+  isolation.
+* For the Victron BlueSolar 150/70 and 150/85, you will need a canbus
+  interface. I own a 150/70, therefore I created an [arduino solution][arduino-victron-canbus]
+  that converts the relevant info into VE.Direct.
+* I hope that in due time this will also work with the popular Voltronic
+  inverters.
+
+## Detailed installation
+
+TODO: write this.
 
 ## Install the angular part
 
@@ -83,3 +140,4 @@ Edit mosquitto.conf and set:
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
 [node]: http://nodejs.org
+[arduino-victron-canbus]: https://github.com/izak/arduino-victron-canbus
