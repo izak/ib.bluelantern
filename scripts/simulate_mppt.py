@@ -9,7 +9,7 @@ def main():
     client.connect('localhost', 1883, 60)
     try:
         while True:
-            pv_power = 200 + randint(-30, 35)
+            pv_power = 600 + randint(-30, 35)
             bat_temp = 25 + randint(-1, 1)
             bat_volt = (245 + randint(-1, 1))/10.0
 
