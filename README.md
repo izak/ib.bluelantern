@@ -15,7 +15,7 @@ communicating with the relevant piece of equipment. Ideally it should be
 possible for the developer to use the language of his choice.
 
 For a communications bus, MQTT is utilised. Instructions for building Mosquitto
-is included below.
+are included below.
 
 In order to link your equipment, all you need to do is write the interfacing
 code for communicating voltage, current and power (if available) onto the mqtt
@@ -39,9 +39,9 @@ The other components of the system are:
 For development you will need:
 
 * Python, and preferably virtualenv.
-* [nodejs][node] to get the angular part working. This pulls in heaps of
-  javascript libraries. In due course, I will probably aim at making a static
-  distribution for people who don't want to develop this part.
+* If you intend in-depth development on the web interface, you need
+  [nodejs][node] to get the angular part working. This pulls in heaps of
+  javascript libraries. This part is optional.
 * An MQTT broker. Instructions are included below for Mosquitto.
 
 Some equipment requires specialised hardware.
@@ -52,42 +52,11 @@ Some equipment requires specialised hardware.
   level) converter. I strongly advise the use of the Victron cable for galvanic
   isolation.
 * For the Victron BlueSolar 150/70 and 150/85, you will need a canbus
-  interface. I own a 150/70, therefore I created an [arduino solution][arduino-victron-canbus]
-  that converts the relevant info into VE.Direct.
+  interface. I own a 150/70, therefore I created an
+  [arduino solution][arduino-victron-canbus] that converts the relevant info
+  into VE.Direct.
 * I hope that in due time this will also work with the popular Voltronic
   inverters.
-
-## Detailed installation
-
-TODO: write this.
-
-## Install the angular part
-
-To develop this part, you need [nodejs][node].
-
-### Install Dependencies
-
-We have two kinds of dependencies in this project: tools and angular framework code.  The tools help
-us manage and test the application.
-
-* We get the tools we depend upon via `npm`, the [node package manager][npm].
-* We get the angular code via `bower`, a [client-side code package manager][bower].
-
-We have preconfigured `npm` to automatically run `bower` so we can simply do:
-
-```
-npm install
-```
-
-Behind the scenes this will also call `bower install`.  You should find that you have two new
-folders in your project.
-
-* `node_modules` - contains the npm packages for the tools we need
-* `app/bower_components` - contains the angular framework files
-
-*Note that the `bower_components` folder would normally be installed in the
-root folder but this is changed in the `.bowerrc` file.  Putting it in the app
-folder makes it easier to serve the files by a webserver.*
 
 ## Install the python part
 
@@ -97,15 +66,21 @@ directory and:
     virtualenv venv
     venv/bin/pip install -e .
 
-This will pull in all dependencies.
+This will pull in all dependencies and install the in the virtual environment,
+leaving your original python installation unchanged.
 
 Start it with `venv/bin/pserve development.ini`
 
 ## Compile mosquitto
 
+This step is optional, although a working MQTT server is required. You can use
+iot.eclipse.org for development or testing purposes, or you can use an
+alternative broker available for your platform. Mosquitto is free, has few
+dependencies, and works well for development.
+
 ### Install requirements
 
-    sudo apt-get install libwrap0-dev libssl-dev libuuid1-dev uuid-dev
+    sudo apt-get install libwrap0-dev libssl-dev uuid-dev
 
 ### Get mosquitto source
 
@@ -144,6 +119,15 @@ Likewise, you can use the utilities that comes with it, but for that to work
 the library must be loadable. You can work around this by setting `LD_LIBRARY_PATH`.
 
     LD_LIBRARY_PATH=lib client/mosquitto_pub -t battery01/inverter/power -m 555.42
+
+## Install the angular part
+
+You don't need to do this unless you intend to do heavy development involving
+the upstream dependencies. Everyone else can skip this as the code comes
+prepackaged with a version of angular and all support libraries.
+
+To develop this part, you need [nodejs][node]. After installing nodejs,
+running `npm install` is sufficient to set up all the required components.
 
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
