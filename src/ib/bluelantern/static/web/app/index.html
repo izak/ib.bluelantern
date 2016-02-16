@@ -28,14 +28,16 @@
 
   <div>Blue Lantern: v<span app-version></span></div>
 
-  <!-- In production use:
-  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
-  -->
+  <!-- During development
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/raphael/raphael.js"></script>
   <script src="bower_components/justgage-bower/justgage.js"></script>
   <script src="bower_components/angular-gage/dist/angular-gage.js"></script>
+  -->
+  <!-- Production, or if you're too lazy to install nodejs -->
+  <script src="build/bower-libs.js"></script>
+
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
