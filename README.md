@@ -135,7 +135,15 @@ Edit mosquitto.conf and set:
 
 ### Start it up
 
+You can start mosquitto without installing it, if you just want to use it for
+development.
+
     src/mosquitto -c mosquitto.conf
+
+Likewise, you can use the utilities that comes with it, but for that to work
+the library must be loadable. You can work around this by setting `LD_LIBRARY_PATH`.
+
+    LD_LIBRARY_PATH=lib client/mosquitto_pub -t battery01/inverter/power -m 555.42
 
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
