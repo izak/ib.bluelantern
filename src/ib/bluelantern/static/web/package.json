@@ -11,6 +11,6 @@
   },
   "scripts": {
     "postinstall": "bower install",
-    "build-js": "/bin/sh build-js.sh"
+    "bower-libs": "/bin/sh build-bower.sh"
   }
 }

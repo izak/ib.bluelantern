@@ -8,3 +8,7 @@ cat \
     app/bower_components/justgage-bower/justgage.js \
     app/bower_components/angular-gage/dist/angular-gage.js \
     | node_modules/uglify-js/bin/uglifyjs -mc > app/build/bower-libs.js
+cat \
+    app/bower_components/html5-boilerplate/dist/css/normalize.css \
+    app/bower_components/html5-boilerplate/dist/css/main.css \
+    > app/build/bower-libs.css
