@@ -27,6 +27,10 @@ setup(
         'pyramid >= 1.6.1',
         'waitress'
     ],
+    extras_require = {
+        'mk2': ['ib.victron'],
+        'bluesolar': ['pyserial']
+    },
     entry_points="""\
         [paste.app_factory]
         main = ib.bluelantern:main

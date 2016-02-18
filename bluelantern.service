@@ -1,0 +1,18 @@
+# Place this in /etc/systemd/system, then enable with:
+# systemctl daemon-reload
+# systemctl enable bluelantern.service
+
+[Unit]
+Description=BlueLantern web service
+After=network.target
+
+[Service]
+ExecStart=/home/pi/bluelantern/venv/bin/pserve /home/pi/bluelantern/src/ib.bluelantern/development.ini
+Type=simple
+User=pi
+WorkingDirectory=/home/pi/bluelantern
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+Alias=bluelantern.service
