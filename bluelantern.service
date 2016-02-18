@@ -4,7 +4,7 @@
 
 [Unit]
 Description=BlueLantern web service
-After=network.target
+Requires=network.target
 
 [Service]
 ExecStart=/home/pi/bluelantern/venv/bin/pserve /home/pi/bluelantern/src/ib.bluelantern/development.ini
@@ -15,4 +15,3 @@ Restart=always
 
 [Install]
 WantedBy=multi-user.target
-Alias=bluelantern.service
