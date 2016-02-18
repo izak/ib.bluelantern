@@ -5,7 +5,7 @@ logger = logging.getLogger(__name__)
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, rc):
-    logger.info("Connected with result code "+str(rc))
+    logger.info("Connected to MQTT broker with result code "+str(rc))
 
     # Subscribe to all voltage/ampere notifications. Chargers will send
     # positive ampere messages. Inverters and other loads will send negative
@@ -26,7 +26,6 @@ def on_message_maker(cache):
             logger.error("Failed to find equipment for {}".format(msg.topic))
         except ValueError:
             logger.error("Cannot convert value {} to float for {}".format(msg.payload, msg.topic))
-        logger.info("{} {}".format(msg.topic, str(msg.payload)))
     return on_message
 
 def mqtt_init(config, cache):
