@@ -27,6 +27,7 @@ def main():
             client.publish('battery01/inverter/power', str(w), 0)
             client.publish('battery01/inverter/voltage', str(dc_info.ubat), 0)
             client.publish('battery01/inverter/ampere', str(dc_info.ibat), 0)
+            sleep(2)
     except KeyboardInterrupt:
         pass
 
