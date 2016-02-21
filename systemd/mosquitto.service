@@ -1,0 +1,17 @@
+# Use this if you manually compiled mosquitto.  Copy it to /etc/systemd/system,
+# then enable with:
+# systemctl daemon-reload systemctl enable mosquitto.service
+
+[Unit]
+Description=Mosquitto MQTT Broker
+Requires=network.target
+After=network.target
+
+[Service]
+ExecStart=/home/pi/bluelantern/src/mosquitto/src/mosquitto -c /home/pi/bluelantern/src/mosquitto/mosquitto.conf
+Type=simple
+User=pi
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
