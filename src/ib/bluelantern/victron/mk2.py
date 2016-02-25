@@ -18,7 +18,7 @@ def main():
     client.connect('localhost', 1883, 60)
 
     port = Serial(options.port, options.baudrate, timeout=options.timeout)
-    mk2 = MK2(port)
+    mk2 = MK2(port).start()
     # TODO, extend options to configure instance and equipment name
     try:
         while True:
