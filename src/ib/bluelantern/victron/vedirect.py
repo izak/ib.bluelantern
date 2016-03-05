@@ -16,15 +16,18 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
     try:
         while True:
             # TODO error checking
-            line = port.readline()
+            line = port.readline().strip()
             if line:
-                key, value = [x.strip() for x in line.split()[:2]]
-                if key == 'P':
-                    client.publish('{}/{}/power'.format(instance, name), value, 0)
-                elif key == 'V':
-                    client.publish('{}/{}/voltage'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
-                elif key == 'I':
-                    client.publish('{}/{}/ampere'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
+                try:
+                    key, value = [x.strip() for x in line.split()[:2]]
+                    if key == 'P':
+                        client.publish('{}/{}/power'.format(instance, name), value, 0)
+                    elif key == 'V':
+                        client.publish('{}/{}/voltage'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
+                    elif key == 'I':
+                        client.publish('{}/{}/ampere'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
+                except ValueError:
+                    print "Malformed line: {}".format(line)
     except KeyboardInterrupt:
         pass
     port.close()
