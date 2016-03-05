@@ -1,6 +1,7 @@
 import sys
 from serial import Serial
 import paho.mqtt.client as mqtt
+from threading import Thread
 
 def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
         instance, name, serial_port):
