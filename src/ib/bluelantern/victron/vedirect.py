@@ -23,7 +23,7 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
             # TODO error checking
             line = port.readline().strip()
             if line:
-                ts = int(time)
+                ts = int(time())
                 try:
                     key, value = [x.strip() for x in line.split()[:2]]
                     if key == 'P':
