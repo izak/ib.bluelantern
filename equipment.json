@@ -2,7 +2,7 @@
     "battery01": {
         "mppt": {
             "type": "pv",
-            "max_power": 2000
+            "max_power": 1000
         },
         "inverter": {
             "type": "load",
