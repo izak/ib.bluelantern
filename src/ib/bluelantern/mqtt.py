@@ -1,5 +1,6 @@
 import logging
 import paho.mqtt.client as mqtt
+from ib.bluelantern.event import MetricReceived
 
 logger = logging.getLogger(__name__)
 
@@ -17,16 +18,21 @@ def on_connect(client, userdata, rc):
     client.subscribe("+/+/temperature")
 
 # The callback for when a PUBLISH message is received from the server.
-def on_message_maker(cache):
+def on_message_maker(cache, registry):
     def on_message(client, userdata, msg):
         instance, id, unit = msg.topic.split('/')[:3]
         try:
             timestamp, value = msg.payload.split()
-            cache[instance][id][unit] = float(value)
+            value = float(value)
+            cache[instance][id][unit] = value
+            timestamp = int(timestamp)
         except KeyError:
             logger.error("Failed to find equipment for {}".format(msg.topic))
         except ValueError:
             logger.error("Cannot convert value {} to float for {}".format(msg.payload, msg.topic))
+        else:
+            registry.notify(MetricReceived(instance, id,
+                timestamp, unit, value))
     return on_message
 
 def mqtt_init(config, cache):
@@ -38,7 +44,7 @@ def mqtt_init(config, cache):
 
     client = mqtt.Client()
     client.on_connect = on_connect
-    client.on_message = on_message_maker(cache)
+    client.on_message = on_message_maker(cache, config.registry)
 
     client.connect(mqtt_host, mqtt_port, 60)
     if mqtt_username is not None:
