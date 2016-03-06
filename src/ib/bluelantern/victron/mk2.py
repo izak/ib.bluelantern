@@ -1,7 +1,10 @@
 import sys
-from time import sleep
+from time import time, sleep
 import paho.mqtt.client as mqtt
 from threading import Thread
+
+def _payload(ts, v):
+    return "{} {}".format(ts, v)
 
 def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
         instance, name, serial_port):
@@ -25,9 +28,10 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
         while True:
             dc_info = mk2.dc_info()
             w = dc_info.ubat * dc_info.ibat
-            client.publish('{}/{}/power'.format(instance, name), str(w), 0)
-            client.publish('{}/{}/voltage'.format(instance, name), str(dc_info.ubat), 0)
-            client.publish('{}/{}/ampere'.format(instance, name), str(dc_info.ibat), 0)
+            ts = int(time())
+            client.publish('{}/{}/power'.format(instance, name), _payload(ts, w), 0)
+            client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, dc_info.ubat), 0)
+            client.publish('{}/{}/ampere'.format(instance, name), _payload(ts, dc_info.ibat), 0)
             sleep(2)
     except KeyboardInterrupt:
         pass

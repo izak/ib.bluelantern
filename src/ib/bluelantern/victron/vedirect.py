@@ -1,7 +1,11 @@
 import sys
+from time import time
 from serial import Serial
 import paho.mqtt.client as mqtt
 from threading import Thread
+
+def _payload(ts, v):
+    return "{} {}".format(ts, v)
 
 def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
         instance, name, serial_port):
@@ -19,14 +23,15 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
             # TODO error checking
             line = port.readline().strip()
             if line:
+                ts = int(time)
                 try:
                     key, value = [x.strip() for x in line.split()[:2]]
                     if key == 'P':
-                        client.publish('{}/{}/power'.format(instance, name), value, 0)
+                        client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
                     elif key == 'V':
-                        client.publish('{}/{}/voltage'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
+                        client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
                     elif key == 'I':
-                        client.publish('{}/{}/ampere'.format(instance, name), "{:0.2f}".format(int(value)/1000.0), 0)
+                        client.publish('{}/{}/ampere'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
                 except ValueError:
                     print "Malformed line: {}".format(line)
     except KeyboardInterrupt:

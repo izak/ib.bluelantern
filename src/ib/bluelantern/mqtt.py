@@ -21,7 +21,8 @@ def on_message_maker(cache):
     def on_message(client, userdata, msg):
         instance, id, unit = msg.topic.split('/')[:3]
         try:
-            cache[instance][id][unit] = float(msg.payload)
+            timestamp, value = msg.payload.split()
+            cache[instance][id][unit] = float(value)
         except KeyError:
             logger.error("Failed to find equipment for {}".format(msg.topic))
         except ValueError:
