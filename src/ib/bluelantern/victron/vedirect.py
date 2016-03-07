@@ -17,7 +17,7 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
     if mqtt_username is not None:
         client.username_pw_set(mqtt_username, mqtt_password)
 
-    port = Serial(serial_port, 115200, rtscts=True, dsrdtr=True)
+    port = Serial(serial_port, 19200, rtscts=True, dsrdtr=True)
     try:
         while True:
             # TODO error checking
