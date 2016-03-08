@@ -129,6 +129,33 @@ prepackaged with a version of angular and all support libraries.
 To develop this part, you need [nodejs][node]. After installing nodejs,
 running `npm install` is sufficient to set up all the required components.
 
+## Configuring components
+
+### Victron MK2 inverter
+
+Add lines similar to the below to your development.ini file. The port setting
+relies on udev symlinking your usb-serial ports by their ids.  This is the
+default setup on most Linux distributions and should work straight out of the
+box.
+
+    pyramid.includes =
+        ib.bluelantern.victron.mk2
+
+    mk2.instance = battery01
+    mk2.name = inverter
+    mk2.port = /dev/serial/by-id/usb-VICTRONENERGY_MK2USB_COM_Interface_FTABCDEF-if00-port0
+
+### Victron BlueSolar MPPT
+
+Add lines similar to below to your development.ini file.
+
+    pyramid.includes =
+        ib.bluelantern.victron.vedirect
+
+    vedirect.instance = battery01
+    vedirect.name = mppt
+    vedirect.port = /dev/serial/by-id/usb-Silicon_Labs_CP2103_USB_to_UART_Bridge_Controller_0001-if00-port0
+
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
 [node]: http://nodejs.org
