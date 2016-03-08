@@ -156,6 +156,15 @@ Add lines similar to below to your development.ini file.
     vedirect.name = mppt
     vedirect.port = /dev/serial/by-id/usb-Silicon_Labs_CP2103_USB_to_UART_Bridge_Controller_0001-if00-port0
 
+### Stats in CSV file
+
+Add to your development.ini, and point the logger to a file location.
+
+    pyramid.includes =
+        ib.bluelantern.stats.csvlog
+
+    csvlog.filename = /tmp/test.csv
+
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
 [node]: http://nodejs.org
