@@ -31,7 +31,7 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
                     elif key == 'V':
                         client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
                     elif key == 'I':
-                        client.publish('{}/{}/ampere'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
+                        client.publish('{}/{}/current'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
                 except ValueError:
                     print "Malformed line: {}".format(line)
     except KeyboardInterrupt:

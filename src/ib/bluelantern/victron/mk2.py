@@ -31,7 +31,7 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
             ts = int(time())
             client.publish('{}/{}/power'.format(instance, name), _payload(ts, w), 0)
             client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, dc_info.ubat), 0)
-            client.publish('{}/{}/ampere'.format(instance, name), _payload(ts, dc_info.ibat), 0)
+            client.publish('{}/{}/current'.format(instance, name), _payload(ts, dc_info.ibat), 0)
             sleep(2)
     except KeyboardInterrupt:
         pass

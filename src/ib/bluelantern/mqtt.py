@@ -8,12 +8,12 @@ logger = logging.getLogger(__name__)
 def on_connect(client, userdata, rc):
     logger.info("Connected to MQTT broker with result code "+str(rc))
 
-    # Subscribe to all voltage/ampere notifications. Chargers will send
-    # positive ampere messages. Inverters and other loads will send negative
-    # ampere numbers. The voltage numbers will (hopefully) be more or less
+    # Subscribe to all voltage/current notifications. Chargers will send
+    # positive current messages. Inverters and other loads will send negative
+    # current numbers. The voltage numbers will (hopefully) be more or less
     # the same from all sources connected to the same bank.
     client.subscribe("+/+/voltage")
-    client.subscribe("+/+/ampere")
+    client.subscribe("+/+/current")
     client.subscribe("+/+/power")
     client.subscribe("+/+/temperature")
 
