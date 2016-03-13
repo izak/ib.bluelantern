@@ -103,10 +103,10 @@ def statistics(settings):
     #
     # example: Log volts and amps from equipment named `mppt` to file
     # Victron_MPPT_75_15, every two minutes, no treatment
-    # csvlog.statistic.Victron_MPPT_75_15 = mppt@120 v:none,a:none
+    # csvlog.statistic.Victron_MPPT_75_15 = mppt@120 voltage:none,current:none
     #
     # Log watt hours, every 5 minutes, total produced
-    # csvlog.statistic.production = mppt wh:sum@300
+    # csvlog.statistic.production = mppt energy:sum@300
     prefix = 'csvlog.statistic.'
     options = dict(
         (key[len(prefix):], settings[key])
