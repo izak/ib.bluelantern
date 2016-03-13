@@ -163,7 +163,12 @@ Add to your development.ini, and point the logger to a file location.
     pyramid.includes =
         ib.bluelantern.stats.csvlog
 
-    csvlog.filename = /tmp/test.csv
+    csvlog.directory = /tmp
+    csvlog.statistic.Victron_MPPT_150_70 = mppt@120 voltage:avg,current:avg
+
+This will create a file Victron\_MPPT\_150\_70.csv with average current and
+voltage readings for each 120-second window. You can add more than one
+statistic line, each will go to a different file.
 
 [bower]: http://bower.io
 [npm]: https://www.npmjs.org/
