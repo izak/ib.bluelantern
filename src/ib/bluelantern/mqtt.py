@@ -21,8 +21,8 @@ def on_connect(client, userdata, rc):
 def on_message_maker(cache, registry):
     def on_message(client, userdata, msg):
         instance, id, unit = msg.topic.split('/')[:3]
-        # FIXME check that unit is not one of the reserved
-        # keys.
+        assert unit in ('voltage', 'current', 'power', 'temperature'), \
+            "Unknown unit"
         try:
             timestamp, value = msg.payload.split()
             value = float(value)
