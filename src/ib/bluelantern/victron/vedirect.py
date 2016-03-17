@@ -29,11 +29,14 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
                     key, value = [x.strip() for x in line.split()[:2]]
                     if key == 'V':
                         current_voltage = int(value)/1000.0
-                        client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, "{:0.2f}".format(current_voltage), 0)
+                        client.publish('{}/{}/voltage'.format(instance, name),
+                            _payload(ts, "{:0.2f}".format(current_voltage), 0))
                     elif key == 'I':
                         amps = int(value)/1000.0
-                        client.publish('{}/{}/current'.format(instance, name), _payload(ts, "{:0.2f}".format(amps)), 0)
-                        client.publish('{}/{}/power'.format(instance, name), _payload(ts, "{:0.2f}".format(current_voltage*amps)), 0)
+                        client.publish('{}/{}/current'.format(instance, name),
+                            _payload(ts, "{:0.2f}".format(amps)), 0)
+                        client.publish('{}/{}/power'.format(instance, name),
+                            _payload(ts, "{:0.2f}".format(current_voltage*amps)), 0)
                     # P only available on BMV
                     #elif key == 'P':
                     #    client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
