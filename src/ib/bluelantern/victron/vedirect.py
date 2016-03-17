@@ -19,6 +19,7 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
 
     port = Serial(serial_port, 19200, rtscts=True, dsrdtr=True)
     try:
+        current_voltage = 0
         while True:
             # TODO error checking
             line = port.readline().strip()
@@ -26,12 +27,16 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
                 ts = int(time())
                 try:
                     key, value = [x.strip() for x in line.split()[:2]]
-                    if key == 'P':
-                        client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
-                    elif key == 'V':
-                        client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
+                    if key == 'V':
+                        current_voltage = int(value)/1000.0
+                        client.publish('{}/{}/voltage'.format(instance, name), _payload(ts, "{:0.2f}".format(current_voltage), 0)
                     elif key == 'I':
-                        client.publish('{}/{}/current'.format(instance, name), _payload(ts, "{:0.2f}".format(int(value)/1000.0)), 0)
+                        amps = int(value)/1000.0
+                        client.publish('{}/{}/current'.format(instance, name), _payload(ts, "{:0.2f}".format(amps)), 0)
+                        client.publish('{}/{}/power'.format(instance, name), _payload(ts, "{:0.2f}".format(current_voltage*amps)), 0)
+                    # P only available on BMV
+                    #elif key == 'P':
+                    #    client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
                 except ValueError:
                     print "Malformed line: {}".format(line)
     except KeyboardInterrupt:
