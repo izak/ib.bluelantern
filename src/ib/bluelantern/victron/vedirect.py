@@ -8,9 +8,10 @@ def _payload(ts, v):
     return "{} {}".format(ts, v)
 
 def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
-        instance, name, serial_port):
+        instance, name, serial_port, is_bmv=False):
 
     # Connect to MQTT broker
+    import pdb; pdb.set_trace()
     client = mqtt.Client()
     client.loop_start()
     client.connect(mqtt_host, mqtt_port, 60)
@@ -35,11 +36,14 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
                         amps = int(value)/1000.0
                         client.publish('{}/{}/current'.format(instance, name),
                             _payload(ts, "{:0.2f}".format(amps)), 0)
-                        client.publish('{}/{}/power'.format(instance, name),
-                            _payload(ts, "{:0.2f}".format(current_voltage*amps)), 0)
+                        if not is_bmv:
+                            # The BMV sends power figures. The BlueSolar does
+                            # not, so we have to work it out ourselves.
+                            client.publish('{}/{}/power'.format(instance, name),
+                                _payload(ts, "{:0.2f}".format(current_voltage*amps)), 0)
                     # P only available on BMV
-                    #elif key == 'P':
-                    #    client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
+                    elif is_bmv and key == 'P':
+                        client.publish('{}/{}/power'.format(instance, name), _payload(ts, value), 0)
                 except ValueError:
                     print "Malformed line: {}".format(line)
     except KeyboardInterrupt:
@@ -58,9 +62,11 @@ def includeme(config):
         serial_port = config.registry.settings.get('vedirect.{}.port'.format(count))
         instance = config.registry.settings.get('vedirect.{}.instance'.format(count))
         name = config.registry.settings.get('vedirect.{}.name'.format(count))
+        is_bmv = config.registry.settings.get('vedirect.{}.bmv'.format(count),
+            'no').lower() in ('yes', '1', 'true')
 
         target = lambda: main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
-            instance, name, serial_port)
+            instance, name, serial_port, is_bmv)
         thread = Thread(target = target)
         thread.daemon = True
         thread.start()
