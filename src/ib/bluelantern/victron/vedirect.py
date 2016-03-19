@@ -52,15 +52,18 @@ def includeme(config):
     mqtt_username = config.registry.settings.get('mqtt.username')
     mqtt_password = config.registry.settings.get('mqtt.password')
 
-    serial_port = config.registry.settings.get('vedirect.port')
-    instance = config.registry.settings.get('vedirect.instance')
-    name = config.registry.settings.get('vedirect.name')
+    # Start a thread for each configured device
+    count = config.registry.settings.get('vedirect.devicecount', 1)
+    for n in xrange(0, count):
+        serial_port = config.registry.settings.get('vedirect.{}.port'.format(count))
+        instance = config.registry.settings.get('vedirect.{}.instance'.format(count))
+        name = config.registry.settings.get('vedirect.{}.name'.format(count))
 
-    target = lambda: main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
-        instance, name, serial_port)
-    thread = Thread(target = target)
-    thread.daemon = True
-    thread.start()
+        target = lambda: main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
+            instance, name, serial_port)
+        thread = Thread(target = target)
+        thread.daemon = True
+        thread.start()
  
 if __name__ == "__main__":
     main('localhost', 1883, None, None, 'battery01', 'mppt', sys.argv[1])

@@ -152,9 +152,10 @@ Add lines similar to below to your development.ini file.
     pyramid.includes =
         ib.bluelantern.victron.vedirect
 
-    vedirect.instance = battery01
-    vedirect.name = mppt
-    vedirect.port = /dev/serial/by-id/usb-Silicon_Labs_CP2103_USB_to_UART_Bridge_Controller_0001-if00-port0
+    vedirect.devicecount = 1
+    vedirect.1.instance = battery01
+    vedirect.1.name = mppt
+    vedirect.1.port = /dev/serial/by-id/usb-Silicon_Labs_CP2103_USB_to_UART_Bridge_Controller_0001-if00-port0
 
 ### Stats in CSV file
 
