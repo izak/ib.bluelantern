@@ -11,7 +11,6 @@ def main(mqtt_host, mqtt_port, mqtt_username, mqtt_password,
         instance, name, serial_port, is_bmv=False):
 
     # Connect to MQTT broker
-    import pdb; pdb.set_trace()
     client = mqtt.Client()
     client.loop_start()
     client.connect(mqtt_host, mqtt_port, 60)
