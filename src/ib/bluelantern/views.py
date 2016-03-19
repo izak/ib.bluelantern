@@ -44,7 +44,7 @@ def stats(request):
     return {
         'ac_load': ac_load,
         'ac_max_load': ac_max_load,
-        'pv_watt': pv_watt,
+        'pv_watt': max(pv_watt, 0),
         'pv_max_watt': pv_max_watt,
         'bat_watt': bat_watt,
     }
