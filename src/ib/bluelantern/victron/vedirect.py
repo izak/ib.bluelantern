@@ -54,7 +54,7 @@ def includeme(config):
 
     # Start a thread for each configured device
     count = config.registry.settings.get('vedirect.devicecount', 1)
-    for n in xrange(0, count):
+    for n in xrange(0, int(count)):
         serial_port = config.registry.settings.get('vedirect.{}.port'.format(count))
         instance = config.registry.settings.get('vedirect.{}.instance'.format(count))
         name = config.registry.settings.get('vedirect.{}.name'.format(count))
