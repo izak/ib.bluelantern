@@ -23,7 +23,6 @@ function($scope, $timeout, $http) {
     $scope.pv_max_watt = 1000;
     $scope.bat_watt = 0;
     $scope.bat_range = 1000;
-    $scope.overall_load = 0;
 
     (function updateloop(){
         timer = $timeout(function(){
@@ -38,7 +37,6 @@ function($scope, $timeout, $http) {
                 $scope.pv_max_watt = data.pv_max_watt;
                 $scope.bat_watt = data.bat_watt;
                 $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
-                $scope.overall_load = (100.0 * $scope.ac_load)/$scope.ac_max_load;
                 updateloop();
             }).error(function(){
                 // On error, back off exponentially up to a minute

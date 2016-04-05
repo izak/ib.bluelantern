@@ -28,3 +28,21 @@
   content: "";
   padding: 0;
 }
+
+#mainview {
+    position: relative;
+    display: flex;
+}
+
+#mainview .gauge {
+    float: left;
+    width: 20%;
+}
+
+#mainview .flow {
+    float: left;
+    width: 20%;
+    background-image: url("view1/pulse.png");
+    background-repeat: repeat-x;
+    background-position: bottom;
+}
