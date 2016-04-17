@@ -3,6 +3,7 @@ from collections import OrderedDict
 from pyramid.config import Configurator
 from ib.bluelantern.mqtt import mqtt_init
 from ib.bluelantern.interfaces import IEquipmentCache
+from ib.bluelantern.counter import init as init_counter
 
 def main(global_config, **settings):
     """
@@ -27,5 +28,8 @@ def main(global_config, **settings):
     # Set up MQTT link
     mqtt = mqtt_init(config, cache)
     mqtt.loop_start()
+
+    # Set up counters
+    init_counter(config, cache)
 
     return config.make_wsgi_app()
