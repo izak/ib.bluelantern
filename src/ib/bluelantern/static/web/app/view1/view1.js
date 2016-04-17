@@ -25,6 +25,8 @@ function($scope, $timeout, $http) {
     $scope.bat_range = 1000;
     $scope.charge_flow = 0;
     $scope.discharge_flow = 0;
+    $scope.pv_ah = 0;
+    $scope.load_ah = 0;
 
     var cf = document.querySelector('.chargeflow'),
         cfwidth = cf.clientWidth,
@@ -45,12 +47,16 @@ function($scope, $timeout, $http) {
                 $scope.bat_watt = data.bat_watt;
                 $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
 
+                // Ah counters
+                $scope.pv_ah = data.pv_ah;
+                $scope.load_ah = data.load_ah;
+
                 // Animate charge flow
                 var mflow = Math.max(data.pv_max_watt, data.ac_max_load),
                     coff = (cfwidth * data.pv_watt) / (7 * mflow),
                     doff = (dfwidth * data.ac_load) / (7 * mflow);
-                $scope.charge_flow = ($scope.charge_flow + coff) % (20*cfwidth);
-                $scope.discharge_flow = ($scope.discharge_flow + doff) % (20*dfwidth);
+                $scope.charge_flow = ($scope.charge_flow + coff) % cfwidth;
+                $scope.discharge_flow = ($scope.discharge_flow + doff) % dfwidth;
 
                 updateloop();
             }).error(function(){

@@ -45,4 +45,6 @@
     background-image: url("view1/pulse.png");
     background-repeat: repeat-x;
     background-position: bottom;
+    text-align: center;
+    font-size: 200%;
 }
