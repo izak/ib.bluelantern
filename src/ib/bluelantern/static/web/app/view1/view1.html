@@ -1,10 +1,10 @@
 <div id="mainview">
 <div justgage class="gauge" title="PV" label="Watt" value="{{pv_watt}}" min="0" max="{{pv_max_watt}}"
               level-colors="{{reverseColors}}"></div>
-<div class="chargeflow flow" style="background-position-x: {{charge_flow}}px">&nbsp;</div>
+<div class="chargeflow flow" style="background-position-x: {{charge_flow}}px; transition: {{cf_transition}}">&nbsp;</div>
 <div justgage class="gauge" title="Battery Charge" label="Watt" value="{{bat_watt}}" min="{{-bat_range}}" max="{{bat_range}}"
               level-colors="{{reverseColors}}"></div>
-<div class="dischargeflow flow" style="background-position-x: {{discharge_flow}}px">&nbsp;</div>
+<div class="dischargeflow flow" style="background-position-x: {{discharge_flow}}px; transition: {{df_transition}}">&nbsp;</div>
 <div justgage class="gauge" title="Load" label="Watt" value="{{ac_load}}" min="0" max="{{ac_max_load}}"
               level-colors="{{levelColors}}"></div>
 </div>

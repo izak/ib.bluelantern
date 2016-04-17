@@ -26,8 +26,10 @@ function($scope, $timeout, $http) {
     $scope.charge_flow = 0;
     $scope.discharge_flow = 0;
 
-    var cfwidth = document.querySelector('.chargeflow').clientWidth,
-        dfwidth = document.querySelector('.dischargeflow').clientWidth;
+    var cf = document.querySelector('.chargeflow'),
+        cfwidth = cf.clientWidth,
+        df = document.querySelector('.dischargeflow'),
+        dfwidth = df.clientWidth;
 
     (function updateloop(){
         timer = $timeout(function(){
@@ -47,8 +49,8 @@ function($scope, $timeout, $http) {
                 var mflow = Math.max(data.pv_max_watt, data.ac_max_load),
                     coff = (cfwidth * data.pv_watt) / (7 * mflow),
                     doff = (dfwidth * data.ac_load) / (7 * mflow);
-                $scope.charge_flow = ($scope.charge_flow + coff) % cfwidth;
-                $scope.discharge_flow = ($scope.discharge_flow + doff) % dfwidth;
+                $scope.charge_flow = ($scope.charge_flow + coff) % (20*cfwidth);
+                $scope.discharge_flow = ($scope.discharge_flow + doff) % (20*dfwidth);
 
                 updateloop();
             }).error(function(){
