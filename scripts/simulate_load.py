@@ -16,7 +16,7 @@ def main():
 
             client.publish('battery01/inverter/power', "{} {}".format(now, ac_load), 0)
             client.publish('battery01/inverter/voltage', '{} 230'.format(now), 0)
-            client.publish('battery01/inverter/ampere', '{} {}'.format(now, ac_load/230.0), 0)
+            client.publish('battery01/inverter/current', '{} {}'.format(now, ac_load/230.0), 0)
 
             sleep(1)
     except KeyboardInterrupt:

@@ -16,7 +16,7 @@ def main():
 
             client.publish('battery01/mppt/power', "{} {}".format(now, pv_power), 0)
             client.publish('battery01/mppt/voltage', "{} {}".format(now, bat_volt), 0)
-            client.publish('battery01/mppt/ampere', "{} {}".format(now, pv_power/bat_volt), 0)
+            client.publish('battery01/mppt/current', "{} {}".format(now, pv_power/bat_volt), 0)
             client.publish('battery01/mppt/temperature', "{} {}".format(now, bat_temp), 0)
 
             sleep(1)
