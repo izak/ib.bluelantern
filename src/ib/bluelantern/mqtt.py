@@ -1,6 +1,6 @@
 import logging
 import paho.mqtt.client as mqtt
-from ib.bluelantern.event import MetricReceived
+from ib.bluelantern.event import MetricReceived, ChargeMetricReceived, DischargeMetricReceived
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +33,16 @@ def on_message_maker(cache, registry):
         except ValueError:
             logger.error("Cannot convert value {} to float for {}".format(msg.payload, msg.topic))
         else:
-            registry.notify(MetricReceived(instance, id,
-                cache[instance][id]['type'],
-                timestamp, unit, value))
+            t = cache[instance][id]['type']
+            if t in ('pv', ):
+                registry.notify(ChargeMetricReceived(instance, id, t,
+                    timestamp, unit, value))
+            elif t in ('load', ):
+                registry.notify(DischargeMetricReceived(instance, id, t,
+                    timestamp, unit, value))
+            else:
+                registry.notify(MetricReceived(instance, id, t,
+                    timestamp, unit, value))
     return on_message
 
 def mqtt_init(config, cache):

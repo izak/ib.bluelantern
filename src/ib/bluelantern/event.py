@@ -7,3 +7,9 @@ class MetricReceived(object):
         self.timestamp = timestamp
         self.unit = unit
         self.value = value
+
+class ChargeMetricReceived(MetricReceived):
+    """ Sent when incoming charge is detected. """
+
+class DischargeMetricReceived(MetricReceived):
+    """ Sent when outgoing charge is detected. """
