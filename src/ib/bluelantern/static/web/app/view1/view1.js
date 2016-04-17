@@ -23,6 +23,11 @@ function($scope, $timeout, $http) {
     $scope.pv_max_watt = 1000;
     $scope.bat_watt = 0;
     $scope.bat_range = 1000;
+    $scope.charge_flow = 0;
+    $scope.discharge_flow = 0;
+
+    var cfwidth = document.querySelector('.chargeflow').clientWidth,
+        dfwidth = document.querySelector('.dischargeflow').clientWidth;
 
     (function updateloop(){
         timer = $timeout(function(){
@@ -37,6 +42,13 @@ function($scope, $timeout, $http) {
                 $scope.pv_max_watt = data.pv_max_watt;
                 $scope.bat_watt = data.bat_watt;
                 $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
+
+                // Animate charge flow
+                var coff = (20 * data.pv_watt) / data.pv_max_watt,
+                    doff = (20 * data.ac_load) / data.ac_max_load;
+                $scope.charge_flow = ($scope.charge_flow + coff) % cfwidth;
+                $scope.discharge_flow = ($scope.discharge_flow + doff) % dfwidth;
+
                 updateloop();
             }).error(function(){
                 // On error, back off exponentially up to a minute
