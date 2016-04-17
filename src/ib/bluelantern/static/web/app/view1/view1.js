@@ -44,8 +44,9 @@ function($scope, $timeout, $http) {
                 $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
 
                 // Animate charge flow
-                var coff = (20 * data.pv_watt) / data.pv_max_watt,
-                    doff = (20 * data.ac_load) / data.ac_max_load;
+                var mflow = Math.max(data.pv_max_watt, data.ac_max_load),
+                    coff = (cfwidth * data.pv_watt) / (7 * mflow),
+                    doff = (dfwidth * data.ac_load) / (7 * mflow);
                 $scope.charge_flow = ($scope.charge_flow + coff) % cfwidth;
                 $scope.discharge_flow = ($scope.discharge_flow + doff) % dfwidth;
 
