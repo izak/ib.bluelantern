@@ -10,7 +10,8 @@ def home(request):
 def stats(request):
     cache = request.registry.getUtility(IEquipmentCache)
     ac_load = ac_max_load = pv_watt = pv_max_watt = bat_watt = 0.0
-    pv_ah = load_ah = 0.0
+    pv_as = load_as = 0.0
+    pv_ws = load_ws = 0.0
     for instance, a in cache.items():
         has_bmv = False # Assume no BMV until you find one
         instance_pv = instance_load = instance_bat = 0
@@ -20,11 +21,13 @@ def stats(request):
             if t == 'pv':
                 instance_pv += float(b.get('power', 0))
                 pv_max_watt += float(b.get('max_power', 0))
-                pv_ah += float(b.get('counter', 0))
+                pv_as += float(b.get('as_counter', 0))
+                pv_ws += float(b.get('ws_counter', 0))
             elif t == 'load':
                 instance_load += float(b.get('power', 0))
                 ac_max_load += float(b.get('max_power', 0))
-                load_ah += float(b.get('counter', 0))
+                load_as += float(b.get('as_counter', 0))
+                load_ws += float(b.get('ws_counter', 0))
             elif t == 'monitor':
                 has_bmv = True
                 instance_bat += float(b.get('power', 0))
@@ -50,6 +53,8 @@ def stats(request):
         'pv_watt': max(pv_watt, 0),
         'pv_max_watt': pv_max_watt,
         'bat_watt': bat_watt,
-        'pv_ah': round(pv_ah/3600, 3),
-        'load_ah': round(load_ah/3600, 3),
+        'pv_ah': round(pv_as/3600, 2),
+        'load_ah': round(load_as/3600, 2),
+        'pv_wh': round(pv_ws/3600, 1),
+        'load_wh': round(load_ws/3600, 1),
     }

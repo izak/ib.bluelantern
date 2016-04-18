@@ -47,9 +47,11 @@ function($scope, $timeout, $http) {
                 $scope.bat_watt = data.bat_watt;
                 $scope.bat_range = Math.max(data.ac_max_load, data.pv_max_watt);
 
-                // Ah counters
+                // Ah  and Wh counters
                 $scope.pv_ah = data.pv_ah;
                 $scope.load_ah = data.load_ah;
+                $scope.pv_wh = data.pv_wh;
+                $scope.load_wh = data.load_wh;
 
                 // Animate charge flow
                 var mflow = Math.max(data.pv_max_watt, data.ac_max_load),
